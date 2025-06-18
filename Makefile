@@ -11,5 +11,5 @@ create:
 	done; \
 	$$CMD --dry-run=client -o yaml > ./chart/templates/configmap.yaml
 	sed -i '' '/creationTimestamp: null/d' ./chart/templates/configmap.yaml
-	sed -i '' '/  namespace: opa-system/d' ./chart/templates/configmap.yaml
+	sed -i '' '/  namespace: default/d' ./chart/templates/configmap.yaml
 	sed -i '' 's/  name: policies/  name: {{ include "finops-moving-window-policy.fullname" . }}/g' ./chart/templates/configmap.yaml
