@@ -20,7 +20,7 @@ resource_group_mapping := {
 	"ingresses": "api/extensions/v1beta1",
 	"replicasets": "apis/apps/v1",
 	"networkpolicies": "apis/networking.k8s.io/v1",
-	"finopsexamplepricingvmazures": "apis/composition.krateo.io/v0-2-0",
+	"vmazures": "apis/composition.krateo.io/v0-1-2",
 	"virtualmachines": "apis/compute.azure.com/v1api20220301"
 }
 
