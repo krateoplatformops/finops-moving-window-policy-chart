@@ -9,7 +9,7 @@ data:
     \"apis/apps/v1\",\n\t\"horizontalpodautoscalers\": \"api/autoscaling/v1\",\n\t\"jobs\":
     \"apis/batch/v1\",\n\t\"cronjobs\": \"apis/batch/v1beta1\",\n\t\"ingresses\":
     \"api/extensions/v1beta1\",\n\t\"replicasets\": \"apis/apps/v1\",\n\t\"networkpolicies\":
-    \"apis/networking.k8s.io/v1\",\n\t\"finopsexamplepricingvmazures\": \"apis/composition.krateo.io/v0-2-0\",\n\t\"virtualmachines\":
+    \"apis/networking.k8s.io/v1\",\n\t\"vmazures\": \"apis/composition.krateo.io/v0-1-2\",\n\t\"virtualmachines\":
     \"apis/compute.azure.com/v1api20220301\"\n}\n\n# Query for given resource/name
     in provided namespace\n# Example: query_ns(\"deployments\", \"my-app\", \"default\")\nquery_name_ns(resource,
     name, namespace) := http.send({\n\t\"url\": sprintf(\"https://kubernetes.default.svc/%v/namespaces/%v/%v/%v\",
@@ -39,8 +39,8 @@ data:
 
     result := data.finops_admission.main if {
       print("Evaluating request for ", input.request.object.metadata.name, input.request.object.apiVersion, input.request.object.kind)
-      input.request.object.apiVersion  == "composition.krateo.io/v0-2-0"
-      input.request.object.kind        == "FinopsExamplePricingVmAzure"
+      input.request.object.apiVersion  == "composition.krateo.io/v0-1-2"
+      input.request.object.kind        == "VmAzure"
     }
   moving_window.rego: "package finops_admission\n\nimport data.kubernetes.api.client\nimport
     rego.v1\n\noperations := {\"UPDATE\"}\n\ndefault apiVersion = \"admission.k8s.io/v1beta1\"\napiVersion
@@ -74,7 +74,7 @@ data:
     \   vm_resource_ids := get_vm_resource_ids\n    print(\"VM resources found:\",
     vm_resource_ids)\n    result := query_external_service(optimizationServiceUrl,
     databaseHandlerUrl, username, password, table_name, vm_resource_ids)\n}\n\nget_vm_resource_ids
-    := resource_ids if {\n    print(\"Getting live object...\")\n    live := client.query_name_ns(\"finopsexamplepricingvmazures\",
+    := resource_ids if {\n    print(\"Getting live object...\")\n    live := client.query_name_ns(\"vmazures\",
     input.request.object.metadata.name, input.request.object.metadata.namespace)\n
     \   live.status_code == 200\n    print(\"Got live object\")\n    managed_resources
     := live.body.status.managed\n    vm_resources := [res | res := managed_resources[_];

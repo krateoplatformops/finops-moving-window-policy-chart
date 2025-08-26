@@ -63,7 +63,7 @@ optimization_data := result if {
 
 get_vm_resource_ids := resource_ids if {
     print("Getting live object...")
-    live := client.query_name_ns("finopsexamplepricingvmazures", input.request.object.metadata.name, input.request.object.metadata.namespace)
+    live := client.query_name_ns("vmazures", input.request.object.metadata.name, input.request.object.metadata.namespace)
     live.status_code == 200
     print("Got live object")
     managed_resources := live.body.status.managed
