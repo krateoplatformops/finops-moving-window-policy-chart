@@ -9,7 +9,7 @@ data:
     \"apis/apps/v1\",\n\t\"horizontalpodautoscalers\": \"api/autoscaling/v1\",\n\t\"jobs\":
     \"apis/batch/v1\",\n\t\"cronjobs\": \"apis/batch/v1beta1\",\n\t\"ingresses\":
     \"api/extensions/v1beta1\",\n\t\"replicasets\": \"apis/apps/v1\",\n\t\"networkpolicies\":
-    \"apis/networking.k8s.io/v1\",\n\t\"vmazures\": \"apis/composition.krateo.io/v0-1-2\",\n\t\"virtualmachines\":
+    \"apis/networking.k8s.io/v1\",\n\t\"vmazures\": \"apis/composition.krateo.io/v1-0-0\",\n\t\"virtualmachines\":
     \"apis/compute.azure.com/v1api20220301\"\n}\n\n# Query for given resource/name
     in provided namespace\n# Example: query_ns(\"deployments\", \"my-app\", \"default\")\nquery_name_ns(resource,
     name, namespace) := http.send({\n\t\"url\": sprintf(\"https://kubernetes.default.svc/%v/namespaces/%v/%v/%v\",
@@ -39,7 +39,7 @@ data:
 
     result := data.finops_admission.main if {
       print("Evaluating request for ", input.request.object.metadata.name, input.request.object.apiVersion, input.request.object.kind)
-      input.request.object.apiVersion  == "composition.krateo.io/v0-1-2"
+      input.request.object.apiVersion  == "composition.krateo.io/v1-0-0"
       input.request.object.kind        == "VmAzure"
     }
   moving_window.rego: "package finops_admission\n\nimport data.kubernetes.api.client\nimport
