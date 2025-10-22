@@ -8,6 +8,10 @@ jobs:
   package:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Extract and Store Trimmed Repository Name
         run: |
@@ -40,8 +44,7 @@ jobs:
 
       - name: Login to GHCR for ORAS
         run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io \
-            -u "${{ github.repository_owner }}" --password-stdin
+          echo "${{ secrets.GITHUB_TOKEN }}" | oras login ghcr.io -u "${{ github.repository_owner }}" --password-stdin
 
       - run: oras version
 
