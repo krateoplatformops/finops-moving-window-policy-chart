@@ -58,6 +58,6 @@ jobs:
 
       - name: Push OPA Bundle to Container Registry with ORAS
         run: |
-          oras push ghcr.io/krateoplatformops/${{ env.REPO_APP_NAME }}:${{ github.ref_name }} \
+          oras push ghcr.io/${{ env.REPO_APP_NAME }}:${{ github.ref_name }} \
             --config config.json:application/vnd.oci.image.config.v1+json \
             bundle.tar.gz:application/vnd.oci.image.layer.v1.tar+gzip
