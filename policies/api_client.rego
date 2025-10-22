@@ -35,9 +35,7 @@ query_name_ns(resource, name, namespace) := http.send({
 		name,
 	]),
 	"method": "get",
-	"headers": {
-        "authorization": sprintf("Bearer %v", [io.read_file("/var/run/secrets/kubernetes.io/serviceaccount/token")])
-    },
+	"headers": {"authorization": sprintf("Bearer %v", [opa.runtime().env.KUBERNETES_API_TOKEN])},
 	"tls_ca_cert_file": "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt",
 	"raise_error": false,
 })
@@ -54,9 +52,7 @@ query_label_selector_ns(resource, selector, namespace) := http.send({
 		label_map_to_query_string(selector),
 	]),
 	"method": "get",
-	"headers": {
-        "authorization": sprintf("Bearer %v", [io.read_file("/var/run/secrets/kubernetes.io/serviceaccount/token")])
-    },
+	"headers": {"authorization": sprintf("Bearer %v", [opa.runtime().env.KUBERNETES_API_TOKEN])},
 	"tls_ca_cert_file": "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt",
 	"raise_error": false,
 })
@@ -70,9 +66,7 @@ query_all(resource) := http.send({
 		resource,
 	]),
 	"method": "get",
-	"headers": {
-        "authorization": sprintf("Bearer %v", [io.read_file("/var/run/secrets/kubernetes.io/serviceaccount/token")])
-    },
+	"headers": {"authorization": sprintf("Bearer %v", [opa.runtime().env.KUBERNETES_API_TOKEN])},
 	"tls_ca_cert_file": "/var/run/secrets/kubernetes.io/serviceaccount/ca.crt",
 	"raise_error": false,
 })
