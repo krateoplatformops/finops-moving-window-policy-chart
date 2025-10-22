@@ -59,4 +59,4 @@ jobs:
           version: 1.4.2
 
       - name: Build OPA Bundle
-        run: opa build -b policies/ --optimize=1
+        run: opa build -b policies/
