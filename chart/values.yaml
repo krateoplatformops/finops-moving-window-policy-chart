@@ -1,4 +1,0 @@
-opaReleaseName: opa-kube-mgmt
-
-global:
-  krateoNamespace: krateo-system # This is temporary and will have to be removed when the cdc-chart inspector passing of values functionality is added

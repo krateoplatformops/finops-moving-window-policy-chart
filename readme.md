@@ -26,9 +26,21 @@ There are three policies by default:
 
 If you do add new resources to the policies, remember to update the RBAC as well and also restart the OPA pod to allow it to reload the policies.
 
-## Installation
-```sh
-helm repo add krateo https://charts.krateo.io
-helm repo update krateo
-helm install finops-moving-window-policy krateo/finops-moving-window-policy
+## Usage
+Mount the OCI bundle in the [OPA Helm Chart](https://github.com/krateoplatformops/opa-chart) with:
+```yaml
+opa:
+  config:
+    services:
+      ghcr-registry:
+        url: "https://ghcr.io/"
+        type: oci
+    bundles:
+      authz:
+        service: ghcr-registry
+        resource: "ghcr.io/krateoplatformops/finops-moving-window-policy-chart:latest"
+        persist: false
+        polling:
+          min_delay_seconds: 60
+          max_delay_seconds: 120
 ```
