@@ -48,11 +48,9 @@ optimization_data := result if {
     objService := client.query_name_ns("secrets", optimizationServiceSecretName, optimizationServiceSecretNamespace)
     optimizationServiceEndpoint := objService.body
     print("Got response to GET secret optimizationService: ", objService.status)
-    print("Got error to GET secret optimizationService: ", objService.error)
     objDBHandler := client.query_name_ns("secrets", databaseHandlerSecretName, databaseHandlerSecretNamespace)
     databaseHandlerEndpoint := objDBHandler.body
     print("Got response to GET secret dbHandler: ", objDBHandler.status)
-    print("Got error to GET secret dbHandler: ", objDBHandler.error)
     databaseHandlerUrl := base64.decode(databaseHandlerEndpoint.data["server-url"])
     optimizationServiceUrl := base64.decode(optimizationServiceEndpoint.data["server-url"])
     username := base64.decode(databaseHandlerEndpoint.data["username"])
@@ -66,6 +64,7 @@ optimization_data := result if {
 get_vm_resource_ids := resource_ids if {
     print("Getting live object...")
     live := client.query_name_ns("vmazures", input.request.object.metadata.name, input.request.object.metadata.namespace)
+    print("Got response to GET live object: ", live.status)
     live.status_code == 200
     print("Got live object")
     managed_resources := live.body.status.managed
